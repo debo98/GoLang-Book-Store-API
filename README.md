@@ -35,20 +35,27 @@ A simple RESTful API written in Go to manage a list of books. The API supports a
 
     ```bash
     git clone https://github.com/debo98/GoLang-ToDo-List.git
-    cd GoLang-ToDo-List/cmd/
+    cd GoLang-ToDo-List
     ```
 
-2. **Running the server**
+2. **Building the files**
 
-```bash
-./bookapi
-```
+    ```bash
+    cd cmd/
+    go build -o bookapi
+    ```
 
-This command will compile and start the server on port 8000. You should see a log message like:
+3. **Running the server**
 
-```bash
-Server running on http://localhost:8000
-```
+    ```bash
+    ./bookapi
+    ```
+
+    This command will compile and start the server on port 8000. You should see a log message like:
+
+    ```bash
+    Server running on http://localhost:8000
+    ```
 
 ## API Endpoints
 
@@ -60,7 +67,7 @@ cURL:
 curl -X GET http://localhost:8000/books
 ```
 
-Description: Returns a JSON array of all books stored in memory.
+Description: Returns a JSON array of all books stored in memory.Mutex lock/unlock is used to ensure safe access to the book list in a concurrent environment.
 
 Response:
 
@@ -93,7 +100,7 @@ curl -X POST http://localhost:8000/books \
 -d '{"title": "Book Title", "author": "Author Name"}'
 ```
 
-Description: Accepts a JSON payload to create a new book. The book is added to an in-memory list with a unique ID.
+Description: Accepts a JSON payload to create a new book. The book is added to an in-memory list with a unique ID. The API uses mutex lock/unlock to prevent race conditions when adding a book.
 
 Response:
 
@@ -121,7 +128,7 @@ cURL:
 curl -X DELETE http://localhost:8000/books/1
 ```
 
-Description: Deletes the book with the specified ID.
+Description: Deletes the book with the specified ID. Mutex lock/unlock is used to ensure safe deletion in a concurrent environment.
 
 URL Parameter:
 
